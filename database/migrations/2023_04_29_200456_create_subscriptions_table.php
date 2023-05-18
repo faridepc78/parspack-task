@@ -18,7 +18,7 @@ return new class extends Migration
             ->constrained('apps')
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
-            $table->enum('status', Subscription::$statuses);
+            $table->string('status');
             $table->dateTime('expires_at')->nullable();
             $table->timestamp('last_checked_at')->nullable();
             $table->timestamps();

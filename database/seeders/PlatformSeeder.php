@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 
 class PlatformSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         $platformRepository = resolve(PlatformRepositoryInterface::class);
 
@@ -16,8 +16,6 @@ class PlatformSeeder extends Seeder
             foreach (Platform::$defaultPlatforms as $platform) {
                 $platformRepository->create($platform);
             }
-
-        //            Platform::factory(10)->create();
         } else {
             $this->command->warn('Platforms has already been created');
         }

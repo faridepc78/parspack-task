@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 
 class AppSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         $appRepository = resolve(AppRepositoryInterface::class);
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Subscription\SubscriptionStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -44,14 +45,12 @@ class Subscription extends Model
         return $this->belongsTo(App::class);
     }
 
-    const ACTIVE_STATUS = 'active';
-    const EXPIRED_STATUS = 'expired';
-    const PENDING_STATUS = 'pending';
-
-    public static array $statuses =
-        [
-            self::ACTIVE_STATUS,
-            self::EXPIRED_STATUS,
-            self::PENDING_STATUS,
+    public static function statuses(): array
+    {
+        return [
+            SubscriptionStatusEnum::ACTIVE->value,
+            SubscriptionStatusEnum::EXPIRED->value,
+            SubscriptionStatusEnum::PENDING->value,
         ];
+    }
 }

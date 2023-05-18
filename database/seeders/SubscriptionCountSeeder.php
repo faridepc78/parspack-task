@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 
 class SubscriptionCountSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         $subscriptionCountRepository = resolve(SubscriptionCountRepositoryInterface::class);
 

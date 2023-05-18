@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 
 class SubscriptionSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         $subscriptionRepository = resolve(SubscriptionRepositoryInterface::class);
 

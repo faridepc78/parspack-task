@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\User\UserRoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -44,25 +45,28 @@ class User extends Authenticatable
             'password',
         ];
 
-    public function setPasswordAttribute($value)
+    protected $casts =
+        [
+            'role' => UserRoleEnum::class,
+        ];
+
+    public function setPasswordAttribute($value): void
     {
         $this->attributes['password'] = bcrypt($value);
     }
 
-    const ADMIN_ROLE = 'admin';
-
-    const USER_ROLE = 'user';
-
-    public static array $roles =
-        [
-            self::ADMIN_ROLE,
-            self::USER_ROLE,
+    public static function roles(): array
+    {
+        return [
+          UserRoleEnum::USER->value,
+          UserRoleEnum::ADMIN->value,
         ];
+    }
 
     public static array $admin = [
         'name' => 'admin',
         'email' => 'admin@gmail.com',
         'password' => 12345678,
-        'role' => User::ADMIN_ROLE,
+        'role' => 'admin',
     ];
 }
