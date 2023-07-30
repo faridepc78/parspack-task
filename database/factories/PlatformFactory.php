@@ -12,8 +12,8 @@ class PlatformFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
-            'http_service_url' => $this->faker->url,
+            'name' => $this->faker->unique()->name(),
+            'http_service_url' => $this->faker->unique()->url(),
         ];
     }
 }

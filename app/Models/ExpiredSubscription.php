@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * SubscriptionCount model class
+ * ExpiredSubscription model class
  *
  * @property int $id
  * @property int $count
@@ -15,11 +14,9 @@ use Illuminate\Support\Carbon;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class SubscriptionCount extends Model
+class ExpiredSubscription extends Model
 {
-    use HasFactory;
-
-    protected $table = 'subscription_counts';
+    protected $table = 'expired_subscriptions';
 
     protected $guarded =
         [

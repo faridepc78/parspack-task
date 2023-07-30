@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\App;
-use App\Repositories\Platform\PlatformRepositoryInterface;
+use App\Models\Platform;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AppFactory extends Factory
@@ -12,11 +12,12 @@ class AppFactory extends Factory
 
     public function definition(): array
     {
-        $platformRepository = resolve(PlatformRepositoryInterface::class);
-
         return [
-            'name' => $this->faker->name,
-            'platform_id' => $platformRepository->getRandomByNames(['android', 'ios'])
+            'name' => $this->faker->unique()->name(),
+            'platform_id' => Platform::query()
+                ->inRandomOrder()
+                ->first()
+                ->id,
         ];
     }
 }

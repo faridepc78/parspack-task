@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
             PlatformSeeder::class,
             AppSeeder::class,
             SubscriptionSeeder::class,
-            SubscriptionCountSeeder::class,
         ]);
     }
 }

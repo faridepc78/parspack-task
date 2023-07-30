@@ -14,8 +14,8 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property int $app_id
  * @property string $status
- * @property Carbon|null $expires_at
- * @property Carbon|null $last_checked_at
+ * @property Carbon $expires_at
+ * @property Carbon|null $checked_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
@@ -37,7 +37,7 @@ class Subscription extends Model
             'app_id',
             'status',
             'expires_at',
-            'last_checked_at',
+            'checked_at',
         ];
 
     public function app(): BelongsTo

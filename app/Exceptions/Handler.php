@@ -2,10 +2,11 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Lanin\Laravel\ApiExceptions\ApiException;
+use Lanin\Laravel\ApiExceptions\LaravelExceptionHandler;
 use Throwable;
 
-class Handler extends ExceptionHandler
+class Handler extends LaravelExceptionHandler
 {
     /**
      * The list of the inputs that are never flashed to the session on validation exceptions.
@@ -26,5 +27,12 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    protected function formatApiResponse(ApiException $exception): array
+    {
+        return [
+            'error' => $exception->toArray(),
+        ];
     }
 }

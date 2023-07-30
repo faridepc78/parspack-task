@@ -19,8 +19,8 @@ return new class extends Migration
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
             $table->string('status');
-            $table->dateTime('expires_at')->nullable();
-            $table->timestamp('last_checked_at')->nullable();
+            $table->timestamp('expires_at');
+            $table->timestamp('checked_at')->nullable();
             $table->timestamps();
         });
     }

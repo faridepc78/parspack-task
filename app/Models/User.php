@@ -48,18 +48,14 @@ class User extends Authenticatable
     protected $casts =
         [
             'role' => UserRoleEnum::class,
+            'password' => 'hashed',
         ];
-
-    public function setPasswordAttribute($value): void
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
 
     public static function roles(): array
     {
         return [
-          UserRoleEnum::USER->value,
-          UserRoleEnum::ADMIN->value,
+            UserRoleEnum::USER->value,
+            UserRoleEnum::ADMIN->value,
         ];
     }
 

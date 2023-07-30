@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subscription_counts', function (Blueprint $table) {
+        Schema::create('expired_subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->integer('count');
-            $table->dateTime('checked_at');
+            $table->unsignedBigInteger('count');
+            $table->timestamp('checked_at');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subscription_counts');
+        Schema::dropIfExists('expired_subscriptions');
     }
 };

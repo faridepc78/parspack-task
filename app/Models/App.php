@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -41,8 +41,8 @@ class App extends Model
         return $this->belongsTo(Platform::class);
     }
 
-    public function subscriptions(): HasMany
+    public function subscription(): HasOne
     {
-        return $this->hasMany(Subscription::class);
+        return $this->hasOne(Subscription::class);
     }
 }

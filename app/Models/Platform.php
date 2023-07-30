@@ -37,11 +37,11 @@ class Platform extends Model
     public static array $defaultPlatforms = [
         [
             'name' => 'android',
-            'http_service_url' => 'https://android_http_service_url.test',
+            'http_service_url' => 'https://api.play.google.com/subscription',
         ],
         [
             'name' => 'ios',
-            'http_service_url' => 'https://ios_http_service_url.test',
+            'http_service_url' => 'https://api.appstore.com/subscription',
         ],
     ];
 }

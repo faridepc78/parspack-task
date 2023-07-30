@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('apps', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name', 150)->unique();
             $table->foreignId('platform_id')
                 ->constrained('platforms')
                 ->cascadeOnUpdate()
