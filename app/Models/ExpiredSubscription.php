@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ExpiredSubscription\ExpiredSubscriptionTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -11,6 +12,7 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property int $count
  * @property Carbon $checked_at
+ * @property string $type
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
@@ -29,5 +31,19 @@ class ExpiredSubscription extends Model
         [
             'count',
             'checked_at',
+            'type',
         ];
+
+    protected $casts =
+        [
+            'type' => ExpiredSubscriptionTypeEnum::class,
+        ];
+
+    public static function types(): array
+    {
+        return [
+            ExpiredSubscriptionTypeEnum::REQUEST->value,
+            ExpiredSubscriptionTypeEnum::COMMAND->value,
+        ];
+    }
 }

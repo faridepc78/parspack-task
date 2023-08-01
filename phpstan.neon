@@ -14,6 +14,7 @@ parameters:
 #        - '#PHPDoc tag @var#'
 #
     excludePaths:
-
+        - ./app/Http/Resources
+        - ./app/Rules
 #
 #    checkMissingIterableValueType: false

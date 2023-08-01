@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\V1\AppController;
-use App\Http\Controllers\Api\V1\SubscriptionController;
+use App\Enums\User\UserRoleEnum;
+use App\Http\Controllers\Api\V1\Admin\ReportController;
 use App\Http\Controllers\Api\V1\TestController;
+use App\Http\Controllers\Api\V1\User\AppController;
+use App\Http\Controllers\Api\V1\User\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')
@@ -19,8 +21,12 @@ Route::prefix('v1')
             ->name('subscriptions.check');
         // #endregion
 
-        Route::get('apps/{app}', AppController::class)
-            ->name('apps.show');
+        Route::apiResource('apps', AppController::class)
+            ->only('show');
+
+        Route::get('admin/reports/expired_subscription', ReportController::class)
+            ->name('admin.reports.expired-subscription')
+            ->middleware('check_role:'.UserRoleEnum::ADMIN->value);
 
         Route::post('test', TestController::class)
             ->name('test');

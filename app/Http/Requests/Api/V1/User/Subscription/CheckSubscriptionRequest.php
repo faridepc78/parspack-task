@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\V1\Subscription;
+namespace App\Http\Requests\Api\V1\User\Subscription;
 
 use App\Rules\CheckValidApp;
 use Illuminate\Foundation\Http\FormRequest;

@@ -6,7 +6,7 @@ use App\Models\App;
 
 class BaseSubscriptionService
 {
-    public function handler(App $app)
+    public static function handler(App $app)
     {
         // Get the platform config
         $platformConfig = config("subscription.AppPlatforms.{$app->platform->name}");
@@ -15,6 +15,6 @@ class BaseSubscriptionService
         $handlerClass = $platformConfig['handler'];
 
         // Call the handler
-        return resolve($handlerClass)->checkStatus($app);
+        return resolve($handlerClass)::checkStatus($app);
     }
 }

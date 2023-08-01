@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('count');
             $table->timestamp('checked_at');
+            $table->string('type');
             $table->timestamps();
         });
     }

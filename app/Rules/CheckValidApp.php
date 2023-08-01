@@ -13,7 +13,7 @@ class CheckValidApp implements ValidationRule
     {
         $app = App::query()->findOrFail($value);
 
-        if ($app->subscription->status == SubscriptionStatusEnum::EXPIRED->value) {
+        if ($app->subscription->status->value == SubscriptionStatusEnum::EXPIRED->value) {
             $fail('the app_id is invalid');
         }
     }

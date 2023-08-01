@@ -40,10 +40,10 @@ class Subscription extends Model
             'checked_at',
         ];
 
-    public function app(): BelongsTo
-    {
-        return $this->belongsTo(App::class);
-    }
+    protected $casts =
+        [
+            'status' => SubscriptionStatusEnum::class,
+        ];
 
     public static function statuses(): array
     {
@@ -52,5 +52,10 @@ class Subscription extends Model
             SubscriptionStatusEnum::EXPIRED->value,
             SubscriptionStatusEnum::PENDING->value,
         ];
+    }
+
+    public function app(): BelongsTo
+    {
+        return $this->belongsTo(App::class, 'app_id');
     }
 }

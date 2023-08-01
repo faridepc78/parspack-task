@@ -2,12 +2,14 @@
 
 namespace App\Services\Subscription;
 
+use App\Enums\ExpiredSubscription\ExpiredSubscriptionTypeEnum;
 use App\Enums\Log\LogTypeEnum;
 use App\Enums\Subscription\SubscriptionStatusEnum;
 use App\Enums\User\UserRoleEnum;
 use App\Jobs\CheckSubscriptionJob;
 use App\Jobs\SendExpiredSubscriptionJob;
 use App\Models\App;
+use App\Models\ExpiredSubscription;
 use App\Models\Log;
 use App\Models\User;
 use App\Notifications\SendExpiredSubscriptionNotification;
@@ -16,21 +18,12 @@ use Illuminate\Foundation\Bus\PendingDispatch;
 use Illuminate\Http\Client\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 abstract class DefaultSubscriptionService
 {
     use ApiResponser;
-
-    private static Carbon $delay;
-
-    private static JsonResponse $successResponse;
-
-    private function __construct()
-    {
-        self::$delay = self::getDelayRequestForLater(); // @phpstan-ignore-line
-        self::$successResponse = self::getSuccessResponse(); // @phpstan-ignore-line
-    }
 
     abstract public static function getDelayRequestForLater();
 
@@ -46,6 +39,9 @@ abstract class DefaultSubscriptionService
 
             if (Carbon::now()->gt($expiresAt)) {
                 $newSubscriptionStatus = SubscriptionStatusEnum::EXPIRED->value;
+
+                self::updateExpiredSubscription();
+
                 if ($subscriptionStatus === SubscriptionStatusEnum::ACTIVE->value) {
                     self::sendExpiredSubscriptionNotification($app);
                 }
@@ -55,7 +51,7 @@ abstract class DefaultSubscriptionService
 
             self::updateSubscription($app, $newSubscriptionStatus);
 
-            return self::$successResponse;
+            return static::getSuccessResponse();
         } else {
             return self::runRequestForLater($app);
         }
@@ -65,7 +61,7 @@ abstract class DefaultSubscriptionService
     {
         CheckSubscriptionJob::dispatch($app)
             ->onConnection('database')
-            ->delay(self::$delay);
+            ->delay(static::getDelayRequestForLater());
 
         return self::success_response(
             null,
@@ -92,6 +88,28 @@ abstract class DefaultSubscriptionService
         }
 
         return $app->subscription->update($values);
+    }
+
+    private static function updateExpiredSubscription()
+    {
+        $expiredSubscription = ExpiredSubscription::query()
+            ->where('type', '=', ExpiredSubscriptionTypeEnum::REQUEST->value)
+            ->first();
+
+        if ($expiredSubscription) {
+            return $expiredSubscription->
+            update([
+                'count' => DB::raw('count + 1'),
+                'checked_at' => Carbon::now(),
+            ]);
+        } else {
+            return ExpiredSubscription::query()
+                ->create([
+                    'count' => 1,
+                    'checked_at' => Carbon::now(),
+                    'type' => ExpiredSubscriptionTypeEnum::REQUEST->value,
+                ]);
+        }
     }
 
     private static function sendExpiredSubscriptionNotification(App $app): PendingDispatch
