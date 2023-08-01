@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Subscription;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,9 +14,9 @@ return new class extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('app_id')
-            ->constrained('apps')
-            ->cascadeOnUpdate()
-            ->cascadeOnDelete();
+                ->constrained('apps')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->string('status');
             $table->timestamp('expires_at');
             $table->timestamp('checked_at')->nullable();

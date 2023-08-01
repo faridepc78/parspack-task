@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\V1\Subscription\SubscriptionController;
+use App\Http\Controllers\Api\V1\AppController;
+use App\Http\Controllers\Api\V1\SubscriptionController;
+use App\Http\Controllers\Api\V1\TestController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')
@@ -16,4 +18,10 @@ Route::prefix('v1')
         )
             ->name('subscriptions.check');
         // #endregion
+
+        Route::get('apps/{app}', AppController::class)
+            ->name('apps.show');
+
+        Route::post('test', TestController::class)
+            ->name('test');
     });

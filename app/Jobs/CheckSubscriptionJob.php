@@ -17,7 +17,6 @@ class CheckSubscriptionJob implements ShouldQueue
 
     public function __construct(public App $app)
     {
-        //
     }
 
     public function handle()

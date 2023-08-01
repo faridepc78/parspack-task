@@ -9,7 +9,7 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        if (!User::query()->count()) {
+        if (! User::query()->count()) {
             User::query()->create(User::$admin);
 
             User::factory(10)->create();

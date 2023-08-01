@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 
 trait ApiResponser
 {
-    protected function success_response($data = null, string $message = null, int $code = 200): JsonResponse
+    protected static function success_response($data = null, string $message = null, int $code = 200): JsonResponse
     {
         return response()->json([
             'status' => 'Success',
@@ -16,7 +16,7 @@ trait ApiResponser
         ])->setStatusCode($code);
     }
 
-    protected function error_response(int $code, string $message = null, $data = null): JsonResponse
+    protected static function error_response(int $code, string $message = null, $data = null): JsonResponse
     {
         return response()->json([
             'status' => 'Error',

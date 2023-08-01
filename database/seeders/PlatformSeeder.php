@@ -9,7 +9,7 @@ class PlatformSeeder extends Seeder
 {
     public function run(): void
     {
-        if (!Platform::query()->count()) {
+        if (! Platform::query()->count()) {
             foreach (Platform::$defaultPlatforms as $platform) {
                 Platform::query()->create($platform);
             }

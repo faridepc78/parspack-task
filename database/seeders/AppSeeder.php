@@ -9,7 +9,7 @@ class AppSeeder extends Seeder
 {
     public function run(): void
     {
-        if (!App::query()->count()) {
+        if (! App::query()->count()) {
             App::factory(50)->create();
         } else {
             $this->command->warn('Apps has already been created');

@@ -16,7 +16,7 @@ class HttpRedirect
             }
         }
 
-        if (!$request->secure() && App::environment(['staging', 'production'])) {
+        if (! $request->secure() && App::environment(['staging', 'production'])) {
             return redirect()->secure($request->getRequestUri(), 301);
         }
 

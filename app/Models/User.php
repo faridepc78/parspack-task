@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\User\UserRoleEnum;
+use Creativeorange\Gravatar\Facades\Gravatar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -40,6 +41,11 @@ class User extends Authenticatable
             'role',
         ];
 
+    protected $appends =
+        [
+            'profile',
+        ];
+
     protected $hidden =
         [
             'password',
@@ -60,9 +66,16 @@ class User extends Authenticatable
     }
 
     public static array $admin = [
-        'name' => 'admin',
-        'email' => 'admin@gmail.com',
+        'name' => 'farid',
+        'email' => 'faridnewepc78@gmail.com',
         'password' => 12345678,
         'role' => 'admin',
     ];
+
+    public function getProfileAttribute(): string
+    {
+        return Gravatar::exists($this->email)
+            ? Gravatar::get($this->email)
+            : asset('assets/images/profile.png');
+    }
 }
