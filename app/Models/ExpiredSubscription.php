@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
  * @property int $count
  * @property Carbon $checked_at
  * @property string $type
+ * @property string $token
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
@@ -32,6 +33,7 @@ class ExpiredSubscription extends Model
             'count',
             'checked_at',
             'type',
+            'token',
         ];
 
     protected $casts =

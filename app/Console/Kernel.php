@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 class Kernel extends ConsoleKernel
 {
@@ -12,7 +14,23 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('queue:work --tries=3 --stop-when-empty')
+            ->everyMinute()
+            ->withoutOverlapping()
+            ->runInBackground();
+
+        $schedule->call(function () {
+            $jobs = DB::table('failed_jobs')->count();
+
+            if ($jobs >= 1) {
+                Artisan::call('queue:retry all');
+            }
+
+        })->everyMinute();
+
+        $schedule->command('apps:check_subscription')
+            ->weekly()
+            ->timezone(config('app.timezone'));
     }
 
     /**

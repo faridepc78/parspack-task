@@ -15,6 +15,5 @@ parameters:
 #
     excludePaths:
         - ./app/Http/Resources
-        - ./app/Rules
 #
 #    checkMissingIterableValueType: false

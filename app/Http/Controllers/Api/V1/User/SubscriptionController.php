@@ -17,6 +17,8 @@ class SubscriptionController extends Controller
     {
         $app = App::query()->find($request->input('app_id'));
 
-        return $this->baseSubscriptionService::handler($app);
+        $token = make_token(10);
+
+        return $this->baseSubscriptionService::handler($app, $token, false);
     }
 }

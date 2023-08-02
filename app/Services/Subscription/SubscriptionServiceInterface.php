@@ -6,5 +6,9 @@ use App\Models\App;
 
 interface SubscriptionServiceInterface
 {
-    public static function checkStatus(App $app);
+    public static function checkStatus(
+        App $app,
+        string $expired_subscriptions_token,
+        bool $command
+    );
 }

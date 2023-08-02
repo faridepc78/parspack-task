@@ -29,18 +29,21 @@ abstract class DefaultSubscriptionService
 
     abstract public static function getSuccessResponse();
 
-    public static function checkStatus(App $app): JsonResponse
-    {
+    public static function checkStatus(
+        App $app,
+        string $expired_subscriptions_token,
+        bool $command
+    ): JsonResponse {
         $response = self::sendRequest($app);
 
         if ($response->ok()) {
             $expiresAt = Carbon::parse($app->subscription->expires_at);
-            $subscriptionStatus = $app->subscription->status;
+            $subscriptionStatus = $app->subscription->status->value; // @phpstan-ignore-line
 
             if (Carbon::now()->gt($expiresAt)) {
                 $newSubscriptionStatus = SubscriptionStatusEnum::EXPIRED->value;
 
-                self::updateExpiredSubscription();
+                self::updateExpiredSubscription($command, $expired_subscriptions_token);
 
                 if ($subscriptionStatus === SubscriptionStatusEnum::ACTIVE->value) {
                     self::sendExpiredSubscriptionNotification($app);
@@ -90,10 +93,14 @@ abstract class DefaultSubscriptionService
         return $app->subscription->update($values);
     }
 
-    private static function updateExpiredSubscription()
+    private static function updateExpiredSubscription($command, $expired_subscriptions_token)
     {
+        $type = $command ? ExpiredSubscriptionTypeEnum::COMMAND->value
+            : ExpiredSubscriptionTypeEnum::REQUEST->value;
+
         $expiredSubscription = ExpiredSubscription::query()
-            ->where('type', '=', ExpiredSubscriptionTypeEnum::REQUEST->value)
+            ->where('type', '=', $type)
+            ->where('token', '=', $expired_subscriptions_token)
             ->first();
 
         if ($expiredSubscription) {
@@ -105,9 +112,10 @@ abstract class DefaultSubscriptionService
         } else {
             return ExpiredSubscription::query()
                 ->create([
-                    'count' => 1,
+                    'count' => DB::raw('count + 1'),
                     'checked_at' => Carbon::now(),
-                    'type' => ExpiredSubscriptionTypeEnum::REQUEST->value,
+                    'type' => $type,
+                    'token' => $expired_subscriptions_token,
                 ]);
         }
     }

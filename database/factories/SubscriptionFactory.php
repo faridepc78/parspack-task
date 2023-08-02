@@ -14,7 +14,7 @@ class SubscriptionFactory extends Factory
     {
         return [
             'app_id' => $this->faker->unique()->randomElement(App::all()->pluck('id')->toArray()),
-            'status' => $this->faker->randomElement(Subscription::statuses()),
+            'status' => $this->faker->randomElement(['pending', 'active']),
             'expires_at' => $this->faker->dateTimeBetween('-7 day', '-1 day'),
         ];
     }

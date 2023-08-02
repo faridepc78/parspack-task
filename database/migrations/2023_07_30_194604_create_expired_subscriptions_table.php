@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('count');
             $table->timestamp('checked_at');
             $table->string('type');
+            $table->string('token', 10)->unique();
             $table->timestamps();
         });
     }

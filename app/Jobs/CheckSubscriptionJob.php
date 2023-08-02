@@ -3,8 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\App;
-use App\Services\Subscription\AppStoreSubscriptionService;
-use App\Services\Subscription\GooglePlaySubscriptionService;
+use App\Services\Subscription\BaseSubscriptionService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -21,15 +20,8 @@ class CheckSubscriptionJob implements ShouldQueue
 
     public function handle()
     {
-        switch ($this->app->platform->name) {
-            case 'android':
-                resolve(GooglePlaySubscriptionService::class)->checkStatus($this->app);
-                break;
-            case 'ios':
-                resolve(AppStoreSubscriptionService::class)->checkStatus($this->app);
-                break;
-            default:
-                return false;
-        }
+        $token = make_token(10);
+
+        return resolve(BaseSubscriptionService::class)::handler($this->app, $token, false);
     }
 }
