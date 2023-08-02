@@ -24,11 +24,13 @@ class QueueServiceProvider extends ServiceProvider
         Queue::failing(function (JobFailed $event) {
             $payload = json_decode($event->job->getRawBody());
             $data = unserialize($payload->data->command);
-            $log = $data->log;
-            $log->update([
-                'error_message' => $event->exception->getMessage(),
-                'is_sent' => false,
-            ]);
+            if (isset($data->log)){
+                $log = $data->log;
+                $log->update([
+                    'error_message' => $event->exception->getMessage(),
+                    'is_sent' => false,
+                ]);
+            }
         });
     }
 }

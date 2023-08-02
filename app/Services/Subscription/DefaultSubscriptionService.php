@@ -18,21 +18,16 @@ use Illuminate\Foundation\Bus\PendingDispatch;
 use Illuminate\Http\Client\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 abstract class DefaultSubscriptionService
 {
     use ApiResponser;
 
-    abstract public static function getDelayRequestForLater();
-
-    abstract public static function getSuccessResponse();
-
     public static function checkStatus(
-        App $app,
+        App    $app,
         string $expired_subscriptions_token,
-        bool $command
+        bool   $command
     ): JsonResponse {
         $response = self::sendRequest($app);
 
@@ -59,6 +54,10 @@ abstract class DefaultSubscriptionService
             return self::runRequestForLater($app);
         }
     }
+
+    abstract public static function getDelayRequestForLater();
+
+    abstract public static function getSuccessResponse();
 
     private static function runRequestForLater(App $app): JsonResponse
     {
@@ -106,13 +105,13 @@ abstract class DefaultSubscriptionService
         if ($expiredSubscription) {
             return $expiredSubscription->
             update([
-                'count' => DB::raw('count + 1'),
+                'count' => $expiredSubscription->count + 1,
                 'checked_at' => Carbon::now(),
             ]);
         } else {
             return ExpiredSubscription::query()
                 ->create([
-                    'count' => DB::raw('count + 1'),
+                    'count' => 1,
                     'checked_at' => Carbon::now(),
                     'type' => $type,
                     'token' => $expired_subscriptions_token,

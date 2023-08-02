@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Feature;
+namespace Api\V1\User;
 
 use Tests\TestCase;
 
-class ExampleTest extends TestCase
+class AppTest extends TestCase
 {
     /**
      * A basic test example.

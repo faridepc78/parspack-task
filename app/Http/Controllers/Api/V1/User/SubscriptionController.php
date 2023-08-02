@@ -15,7 +15,7 @@ class SubscriptionController extends Controller
 
     public function check(CheckSubscriptionRequest $request)
     {
-        $app = App::query()->find($request->input('app_id'));
+        $app = App::query()->findOrFail($request->input('app_id'));
 
         $token = make_token(10);
 
