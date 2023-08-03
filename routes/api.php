@@ -11,7 +11,6 @@ Route::prefix('v1')
     ->as('api.v1.')
     ->middleware(['api', 'throttle:50,1'])
     ->group(function () {
-
         Route::post(
             'subscriptions/check',
             [SubscriptionController::class, 'check']
