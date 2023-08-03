@@ -25,7 +25,6 @@ class Kernel extends ConsoleKernel
             if ($jobs >= 1) {
                 Artisan::call('queue:retry all');
             }
-
         })->everyMinute();
 
         $schedule->command('apps:check_subscription')
