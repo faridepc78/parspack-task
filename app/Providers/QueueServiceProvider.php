@@ -24,7 +24,7 @@ class QueueServiceProvider extends ServiceProvider
         Queue::failing(function (JobFailed $event) {
             $payload = json_decode($event->job->getRawBody());
             $data = unserialize($payload->data->command);
-            if (isset($data->log)){
+            if (isset($data->log)) {
                 $log = $data->log;
                 $log->update([
                     'error_message' => $event->exception->getMessage(),

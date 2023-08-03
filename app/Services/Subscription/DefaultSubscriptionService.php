@@ -25,9 +25,9 @@ abstract class DefaultSubscriptionService
     use ApiResponser;
 
     public static function checkStatus(
-        App    $app,
+        App $app,
         string $expired_subscriptions_token,
-        bool   $command
+        bool $command
     ): JsonResponse {
         $response = self::sendRequest($app);
 
@@ -62,7 +62,6 @@ abstract class DefaultSubscriptionService
     private static function runRequestForLater(App $app): JsonResponse
     {
         CheckSubscriptionJob::dispatch($app)
-            ->onConnection('database')
             ->delay(static::getDelayRequestForLater());
 
         return self::success_response(

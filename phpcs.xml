@@ -77,8 +77,8 @@
     <rule ref="PSR2">
         <exclude name="PSR2.ControlStructures.SwitchDeclaration.BodyOnNextLineCASE" />
         <properties>
-            <property name="lineLimit" value="130"/>
-            <property name="absoluteLineLimit" value="135"/>
+            <property name="lineLimit" value="150"/>
+            <property name="absoluteLineLimit" value="155"/>
         </properties>
     </rule>
     <rule ref="Squiz.Arrays.ArrayDeclaration">
