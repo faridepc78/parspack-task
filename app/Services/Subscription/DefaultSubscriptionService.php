@@ -51,7 +51,7 @@ abstract class DefaultSubscriptionService
 
             return static::getSuccessResponse();
         } else {
-            return self::runRequestForLater($app);
+            return self::runRequestForLater($app, $expired_subscriptions_token, $command);
         }
     }
 
@@ -59,9 +59,9 @@ abstract class DefaultSubscriptionService
 
     abstract public static function getSuccessResponse();
 
-    private static function runRequestForLater(App $app): JsonResponse
+    private static function runRequestForLater(App $app, string $token, bool $command): JsonResponse
     {
-        CheckSubscriptionJob::dispatch($app)
+        CheckSubscriptionJob::dispatch($app, $token, $command)
             ->delay(static::getDelayRequestForLater());
 
         return self::success_response(
@@ -80,13 +80,13 @@ abstract class DefaultSubscriptionService
         ]);
     }
 
-    private static function updateSubscription(App $app, $status = null)
+    private static function updateSubscription(App $app, $status)
     {
-        $values = ['checked_at' => Carbon::now()];
-
-        if ($status !== null) {
-            $values['status'] = $status;
-        }
+        $values =
+            [
+                'checked_at' => Carbon::now(),
+                'status' => $status,
+            ];
 
         return $app->subscription->update($values);
     }

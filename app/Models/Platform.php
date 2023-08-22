@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -44,4 +45,9 @@ class Platform extends Model
             'http_service_url' => 'https://api.appstore.com/subscription',
         ],
     ];
+
+    public function apps(): HasMany
+    {
+        return $this->hasMany(App::class, 'platform_id');
+    }
 }

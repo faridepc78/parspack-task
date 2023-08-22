@@ -10,14 +10,15 @@ It is a task from parspack.com
 
 Its features include the following :
 
+- Dockerized Application
 - Seeders & Factories
 - Jobs && Schedules
 - Use Basic Auth For Admin Request
 - Users,Platforms,Apps,Subscriptions,...
 - Notification && SendMail
+- Logs For Notifications
 - Mocking Services For GooglePlay And AppStore
 - Safe Style Codes
-- Delete Waiting Lists
 - As Much As Possible Solid & Clean Code
 - RestFulApi
 - Make Feature Tests For All Of Apis & Command

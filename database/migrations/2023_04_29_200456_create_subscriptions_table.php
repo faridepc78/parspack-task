@@ -17,7 +17,7 @@ return new class extends Migration
                 ->constrained('apps')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->string('status');
+            $table->string('status', 100);
             $table->timestamp('expires_at');
             $table->timestamp('checked_at')->nullable();
             $table->timestamps();

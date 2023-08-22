@@ -14,14 +14,12 @@ class CheckSubscriptionJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public App $app)
+    public function __construct(public App $app, public string $token, public bool $command)
     {
     }
 
     public function handle()
     {
-        $token = make_token(10);
-
-        return resolve(BaseSubscriptionService::class)::handler($this->app, $token, false);
+        return resolve(BaseSubscriptionService::class)::handler($this->app, $this->token, $this->command);
     }
 }

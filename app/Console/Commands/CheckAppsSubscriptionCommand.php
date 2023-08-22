@@ -18,7 +18,7 @@ class CheckAppsSubscriptionCommand extends Command
     {
         $apps = App::query()
             ->whereHas('subscription', function (Builder $query) {
-                $query->where('status', '!=', SubscriptionStatusEnum::EXPIRED->value);
+                $query->whereNot('status', '=', SubscriptionStatusEnum::EXPIRED->value);
             })
             ->get();
 

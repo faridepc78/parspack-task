@@ -188,7 +188,7 @@ class SubscriptionTest extends TestCase
 
         $this->assertDatabaseCount('jobs', 1);
 
-        $job = new CheckSubscriptionJob($app);
+        $job = new CheckSubscriptionJob($app, make_token(10), false);
         $job->handle();
 
         $subscription->refresh();
@@ -241,7 +241,7 @@ class SubscriptionTest extends TestCase
 
         $this->assertDatabaseCount('jobs', 1);
 
-        $job = new CheckSubscriptionJob($app);
+        $job = new CheckSubscriptionJob($app, make_token(10), false);
         $job->handle();
 
         $subscription->refresh();
@@ -412,7 +412,7 @@ class SubscriptionTest extends TestCase
 
         $this->assertDatabaseCount('jobs', 1);
 
-        $job = new CheckSubscriptionJob($app);
+        $job = new CheckSubscriptionJob($app, make_token(10), false);
         $job->handle();
 
         $this->assertDatabaseCount('jobs', 2);
@@ -491,7 +491,7 @@ class SubscriptionTest extends TestCase
 
         $this->assertDatabaseCount('jobs', 1);
 
-        $job = new CheckSubscriptionJob($app);
+        $job = new CheckSubscriptionJob($app, make_token(10), false);
         $job->handle();
 
         $subscription->refresh();
@@ -664,7 +664,7 @@ class SubscriptionTest extends TestCase
 
         $this->assertDatabaseCount('jobs', 1);
 
-        $job = new CheckSubscriptionJob($app);
+        $job = new CheckSubscriptionJob($app, make_token(10), false);
         $job->handle();
 
         $subscription->refresh();
@@ -717,7 +717,7 @@ class SubscriptionTest extends TestCase
 
         $this->assertDatabaseCount('jobs', 1);
 
-        $job = new CheckSubscriptionJob($app);
+        $job = new CheckSubscriptionJob($app, make_token(10), false);
         $job->handle();
 
         $subscription->refresh();
@@ -888,7 +888,7 @@ class SubscriptionTest extends TestCase
 
         $this->assertDatabaseCount('jobs', 1);
 
-        $job = new CheckSubscriptionJob($app);
+        $job = new CheckSubscriptionJob($app, make_token(10), false);
         $job->handle();
 
         $this->assertDatabaseCount('jobs', 2);
@@ -967,7 +967,7 @@ class SubscriptionTest extends TestCase
 
         $this->assertDatabaseCount('jobs', 1);
 
-        $job = new CheckSubscriptionJob($app);
+        $job = new CheckSubscriptionJob($app, make_token(10), false);
         $job->handle();
 
         $subscription->refresh();

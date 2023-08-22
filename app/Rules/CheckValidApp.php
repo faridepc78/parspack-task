@@ -15,7 +15,7 @@ class CheckValidApp implements ValidationRule
 
         /* @phpstan-ignore-next-line */
         if ($app->subscription->status->value == SubscriptionStatusEnum::EXPIRED->value) {
-            $fail('the app_id is invalid');
+            $fail('the app subscription is expired');
         }
     }
 }
